@@ -18,7 +18,6 @@ class Histogram {
   private svg: Selection<SVGSVGElement, unknown, HTMLElement, any>;
   private title: Selection<SVGTextElement, unknown, HTMLElement, any>;
   private label: Selection<SVGTextElement, unknown, HTMLElement, any>;
-  private xAxis: Selection<SVGGElement, unknown, HTMLElement, any>;
   private yAxis: Selection<SVGGElement, unknown, HTMLElement, any>;
   private yScale: ScaleLinear<number, number, never>;
   private xScale: ScaleLinear<number, number, never>;
@@ -78,7 +77,8 @@ class Histogram {
       this.xScale(this.xScale.domain()[0] + 1) -
       this.xScale(this.xScale.domain()[0]);
 
-    this.xAxis = this.svg
+    // xAxis
+    this.svg
       .append('g')
       .attr('transform', `translate(0, ${this.height - this.padding.bottom})`)
       .call(axisBottom(this.xScale).tickFormat(format('d')));
