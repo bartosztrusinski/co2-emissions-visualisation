@@ -7,7 +7,36 @@
     <title>CO2 Emissions</title>
   </head>
   <body>
-    <div id="app"></div>
+    <nav class="dashboard">
+      <h1>CO<sub>2</sub> Dashboard</h1>
+
+      <article class="container">
+        <section class="card">
+          <h2 class="title">Explore CO<sub>2</sub> emissions by year</h2>
+          <div>
+            <p>Current year: <b class="current-year"></b></p>
+            <input type="range" step="1" class="year-range" />
+          </div>
+        </section>
+
+        <section class="card">
+          <h2 class="title">
+            Choose between total emissions or emissions per capita
+          </h2>
+          <select class="emissions-select" autocomplete="off">
+            <option value="emissions" selected>Emissions</option>
+            <option value="emissionsPerCapita">Emissions Per Capita</option>
+          </select>
+        </section>
+
+        <section class="card">
+          <h2 class="title">Click on a country to see its trends by year</h2>
+        </section>
+      </article>
+    </nav>
+
+    <main class="app"></main>
+
     <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
