@@ -10,7 +10,6 @@ interface EmissionData {
   region: string | undefined;
   year: number;
 }
-
 type EmissionDataArray = DSVParsedArray<EmissionData>;
 
 type EmissionType = keyof Pick<
@@ -18,6 +17,15 @@ type EmissionType = keyof Pick<
   'emissions' | 'emissionsPerCapita'
 >;
 
-type Countries = Feature<Geometry, GeoJsonProperties>[];
+type CountryData = Feature<Geometry, GeoJsonProperties> & {
+  id: number;
+};
+type CountryDataArray = CountryData[];
 
-export type { EmissionData, EmissionDataArray, EmissionType, Countries };
+export type {
+  EmissionData,
+  EmissionDataArray,
+  EmissionType,
+  CountryData,
+  CountryDataArray,
+};
