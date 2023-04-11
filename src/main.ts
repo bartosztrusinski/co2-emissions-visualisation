@@ -1,26 +1,55 @@
 import './style.css';
+import App from './App';
+import { CountryDataArray, EmissionDataArray } from './interface';
 import { feature } from 'topojson-client';
-import { BaseType, csv, json, select } from 'd3';
+import { csv, json, select } from 'd3';
 import { Topology, Objects } from 'topojson-specification';
 import { GeoJsonProperties, FeatureCollection, Geometry } from 'geojson';
-import { Countries, EmissionDataArray } from './interface';
 
 const jsonUrl = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-50m.json';
 const csvUrl = './co2Emissions.csv';
-const appElement = select<BaseType, unknown>('#app')!;
+
+const appElement = select('.app');
+const currentYearLabel = select<HTMLElement, unknown>('.current-year');
+const yearRangeInput = select<HTMLInputElement, unknown>('.year-range');
+const currentEmissionTypeInput = select<HTMLSelectElement, unknown>(
+  '.emissions-select'
+);
+const mainChart = appElement.append('div').classed('main-chart', true);
+const sideChart = appElement.append('div').classed('side-chart', true);
+const tooltip = appElement.append('div').classed('tooltip', true);
+
+const chartWidth = window.innerWidth * 0.45;
+const chartHeight = 300;
 
 try {
   const { countries, emissionData } = await fetchData();
+  const app = new App(countries, emissionData);
 
-  console.log(countries, emissionData);
+  app.currentYearLabel = currentYearLabel;
+  app.tooltip = tooltip;
 
-  appElement.append('p').text('Data loaded');
+  app.listenForYearInput(yearRangeInput);
+  app.listenForEmissionTypeInput(currentEmissionTypeInput);
+
+  app.addChart('Map', mainChart, chartWidth, chartWidth * 0.73);
+  app.addChart('PieChart', sideChart, chartWidth, chartHeight);
+  app.addChart('Histogram', sideChart, chartWidth, chartHeight);
+
+  app.drawCharts();
 } catch (error) {
-  appElement.append('p').text('Error fetching data');
+  const errorElement = appElement.append('p').classed('error', true);
+
+  if (error instanceof Error) {
+    console.error(error.message);
+    errorElement.text(error.message);
+  } else {
+    errorElement.text('Error setting up app');
+  }
 }
 
 async function fetchData(): Promise<{
-  countries: Countries;
+  countries: CountryDataArray;
   emissionData: EmissionDataArray;
 }> {
   try {
@@ -47,7 +76,12 @@ async function fetchData(): Promise<{
       countries
     ) as FeatureCollection<Geometry, GeoJsonProperties>;
 
-    return { countries: features, emissionData };
+    const formattedFeatures = features.map((feature) => ({
+      ...feature,
+      id: Number(feature.id),
+    }));
+
+    return { countries: formattedFeatures, emissionData };
   } catch (error) {
     throw new Error('Error fetching data');
   }
