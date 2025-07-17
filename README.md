@@ -20,6 +20,4 @@ This web application allows you to visualize how carbon dioxide emissions have c
 
 ## Screenshots
 
-<p align="middle">
-  <img src="https://user-images.githubusercontent.com/33166095/232075008-749128ae-e185-4def-a3d3-dcaf2a5a7ed4.png" alt="Emissions Explorer app">
-</p>
+<img width="1845" height="886" alt="Emissions Explorer app" src="https://github.com/user-attachments/assets/cd2645a4-2585-45da-94d9-c72dbdc48302" />
