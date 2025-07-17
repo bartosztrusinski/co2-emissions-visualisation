@@ -99,7 +99,7 @@ body {
 
 .title {
   text-anchor: middle;
-  font-size: 1.5em;
+  font-size: 1.4rem;
   font-weight: 600;
 }
 
@@ -107,22 +107,18 @@ body {
   opacity: 0;
   position: absolute;
   pointer-events: none;
-  border: 0.3rem solid hsl(240, 29%, 47%);
+  border: 0.2rem solid hsl(240, 29%, 47%);
   background-color: hsl(0, 0%, 98%);
-  border-radius: 0.25rem;
-  padding: 0.6rem;
-}
-
-.tooltip p {
-  margin: 2px;
+  border-radius: 0.4rem;
+  padding: 0.4rem;
 }
 
 .tooltip::after {
   content: ' ';
   position: absolute;
-  bottom: -20px;
+  bottom: -1.125rem;
   left: 50%;
   margin-left: -4px;
-  border: 8px solid transparent;
-  border-top-color: hsl(210, 29%, 24%);
+  border: 0.5rem solid transparent;
+  border-top-color: inherit;
 }
